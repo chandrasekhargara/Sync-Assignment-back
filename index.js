@@ -38,26 +38,20 @@ const authenticate = (req, res, next) => {
   });
 };
 
-// Dashboard API
-app.get('/dashboard', authenticate, (req, res) => {
-    const cards = [
-      { id: "1", name: "📍 My Current Location" },
-      { id: "2", name: "🏛️ Delhi - Capital City" },
-      { id: "3", name: "💻 Bengaluru - Tech Hub" }
-    ];
-    
-    res.json({ cards });
-  });
-  
+// ✅ Dashboard API (Now Public, No Login Required)
+app.get('/dashboard', (req, res) => {
+  const cards = [
+    { id: "1", name: "📍 My Current Location" },
+    { id: "2", name: "🏛️ Delhi - Capital City" },
+    { id: "3", name: "💻 Bengaluru - Tech Hub" }
+  ];
+  res.json({ cards });
+});
 
-// Map View API
+// 🔒 Map View API (Still Requires Login)
 app.get('/map', authenticate, (req, res) => {
   res.json({ message: 'Map data for India view' });
 });
-app.get("/", (req, res) => {
-  res.send("Welcome to the backend API. Use /login, /dashboard, or /map.");
-});
-
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
